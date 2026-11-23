@@ -1,0 +1,15 @@
+<% layout("layout/boilerplate")%>
+<div class="row">
+  <div class="col-8 offset-2">
+    <div class="alert alert-danger" role="alert">
+      <h4 class="alert-heading"><%=err.message%></h4>
+      <!--if the application is not in production I want to
+      display the error stack-->
+      <% if (process.env.NODE_ENV !== "production") { %>
+      <p style="overflow-wrap: anywhere"><%= err.stack %></p>
+      <% } %>
+      <!--I can check this by going into production mode and
+      I see the error stack not displayed-->
+    </div>
+  </div>
+</div>

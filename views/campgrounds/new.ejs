@@ -1,0 +1,99 @@
+<% layout("layout/boilerplate") %>
+<div class="row">
+  <h1 class="text-center">New Campground</h1>
+
+  <div class="col-md-6 offset-md-3">
+    <form
+      action="/campgrounds"
+      method="post"
+      novalidate
+      class="validated-form"
+      enctype="multipart/form-data"
+    >
+      <div class="mb-3">
+        <label class="from-label" for="title">title:</label>
+        <input
+          class="form-control"
+          type="text"
+          id="title"
+          name="campground[title]"
+          required
+        />
+        <!--validation text-->
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <div class="mb-3">
+        <label class="from-label" for="location">location:</label>
+        <input
+          class="form-control"
+          type="text"
+          id="location"
+          name="campground[location]"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+
+      <!--previous Image file input
+      <input type="file" name="image" id="" multiple />
+      THe new one is moved to the end
+      -->
+
+      <div class="mb-3">
+        <label class="from-label" for="price">price:</label>
+        <!--I put label outside input group-->
+        <div class="input-group">
+          <!-- <label> here is❌ Cannot put label inside input group-->
+          <span class="input-group-text" id="price-label">$</span>
+          <input
+            type="text"
+            id="price"
+            class="form-control"
+            placeholder="0.00"
+            aria-label="price"
+            aria-describedby="price-label"
+            name="campground[price]"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="from-label" for="description">Description:</label>
+        <textarea
+          class="form-control"
+          type="text"
+          id="description"
+          name="campground[description]"
+          rows="3"
+          required
+        >
+        </textarea>
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+
+      <!--Image File input button-->
+      <div class="mb-3">
+        <label for="inputGroupFile02" class="form-label">
+          Upload campground images:
+        </label>
+
+        <input
+          type="file"
+          class="form-control"
+          id="inputGroupFile02"
+          name="image"
+          multiple
+        />
+      </div>
+      <div class="mb-0">
+        <button class="btn btn-success" type="submit">Add Campground</button>
+      </div>
+    </form>
+
+    <div class="d-flex justify-content-end mb-3">
+      <a class="btn btn-secondary" href="/campgrounds">Back</a>
+    </div>
+  </div>
+</div>
