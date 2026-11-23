@@ -40,12 +40,9 @@ const helmet = require("helmet");
 const { MongoStore } = require("connect-mongo");
 
 //database URL
-//const dbUrl = process.env.DB_URL;
-
-//"mongodb://127.0.0.1:27017/yelp-camp3"
 //console.log("DB_URL:", dbUrl);
 
-dbUrl = "mongodb://127.0.0.1:27017/yelp-camp3";
+dbUrl = dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017/yelp-camp3";
 
 mongoose
   .connect(dbUrl)
@@ -65,12 +62,14 @@ app.use(express.static(path.join(__dirname, "public")));
 //sanitize
 app.use(sanitizeV5());
 
+const secret = process.env.SECRET || "thisshouldbeabettersecret!";
+
 //MongoDB as session store we are not relying on default memory store
 const store = MongoStore.create({
   mongoUrl: dbUrl,
   touchAfter: 24 * 60 * 60,
   crypto: {
-    secret: "thisshouldbeabettersecret!",
+    secret,
   },
 });
 
@@ -82,7 +81,7 @@ store.on("error", function (e) {
 const sessionConfig = {
   store,
   name: "mysession",
-  secret: "thisshouldbeabettersecret",
+  secret,
   resave: false,
   saveUninitialized: true,
   cookie: {
