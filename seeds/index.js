@@ -2,8 +2,21 @@ const mongoose = require("mongoose");
 const Campground = require("../models/campground");
 const cities = require("./cities");
 const { descriptors, places } = require("./seedHelpers");
+
+//to use atlas database
+const path = require("path");
+
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config({
+    path: path.join(__dirname, "../.env"),
+  });
+}
+
+dbUrl = "mongodb://127.0.0.1:27017/yelp-campM";
+//process.env.DB_URL;
+
 mongoose
-  .connect("mongodb://127.0.0.1:27017/yelp-campW")
+  .connect(dbUrl)
   .then(() => {
     console.log("Mongo Connection successful");
   })
@@ -32,7 +45,7 @@ const seedDB = async () => {
 
       //adding in author for every campground as default when the seed file runs
       //I changed the author object id here while changing the database to yelp-camp2
-      author: "6b042f8e96b0c22ef4434cab",
+      author: "6b02c93dc5f848c7ad45e131", //"6b042f8e96b0c22ef4434cab",
 
       geometry: {
         type: "Point",

@@ -36,8 +36,9 @@ const { MongoStore } = require("connect-mongo");
 //database URL
 //console.log("DB_URL:", dbUrl);
 
-dbUrl = "mongodb://127.0.0.1:27017/yelp-campW";
-//"mongodb://127.0.0.1:27017/yelp-camp3" || process.env.DB_URL;
+dbUrl = "mongodb://127.0.0.1:27017/yelp-campM";
+//process.env.DB_URL;
+
 mongoose
   .connect(dbUrl)
   .then(() => {
