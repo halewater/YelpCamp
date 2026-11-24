@@ -43,7 +43,7 @@ mongoose
   .then(() => {
     console.log("Mongo Connection successful");
   })
-  .catch(() => {
+  .catch((err) => {
     console.log("Mongo connection failed", err);
   });
 
