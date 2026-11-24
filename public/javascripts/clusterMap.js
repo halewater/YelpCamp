@@ -10,7 +10,7 @@ const map = new mapboxgl.Map({
       lightPreset: "day", //dawn or night or dusk or day
     },
   },
-  center: [-103.5917, 40.6699], //this is where we center the map
+  center: [78.9629, 20.5937], //this is where we center the map
   zoom: 3,
 });
 
@@ -81,28 +81,52 @@ map.on("load", () => {
   });
 
   //this is for unclustered singular point
-  map.addLayer({
-    id: "unclustered-point",
-    type: "circle", //"symbol",
-    source: "campgrounds",
-    filter: ["!", ["has", "point_count"]],
+  // map.addLayer({
+  //   id: "unclustered-point",
+  //   type: "circle", //"symbol",
+  //   source: "campgrounds",
+  //   filter: ["!", ["has", "point_count"]],
 
-    paint: {
-      "circle-color": "#1165da",
-      "circle-radius": 6,
-      "circle-stroke-width": 1,
-      "circle-stroke-color": "#fff",
-      "circle-emissive-strength": 1,
+  //   paint: {
+  //     "circle-color": "#1165da",
+  //     "circle-radius": 6,
+  //     "circle-stroke-width": 1,
+  //     "circle-stroke-color": "#fff",
+  //     "circle-emissive-strength": 1,
+  //   },
+
+  // });
+
+  map.loadImage(
+    "https://res.cloudinary.com/syicct8d/image/upload/v1795465587/YelpCamp3/ubcifejwfqm7qa4ypzia.png",
+    (error, image) => {
+      if (error) {
+        console.error("Image loading failed:", error);
+        return;
+      }
+
+      map.addImage("custom-pin", image);
+
+      console.log("Image registered:", map.hasImage("custom-pin"));
+
+      map.addLayer({
+        id: "unclustered-point",
+        type: "symbol",
+        source: "campgrounds",
+        filter: ["!", ["has", "point_count"]],
+
+        layout: {
+          "icon-image": "custom-pin",
+          "icon-size": 0.28,
+          "icon-anchor": "bottom",
+          "icon-allow-overlap": true,
+          "icon-ignore-placement": true,
+        },
+      });
+
+      console.log("Unclustered layer added!");
     },
-
-    //So I changed paint to layout
-    /*
-    layout: {
-      "icon-image": "hotel-15",
-      "icon-size": 1,
-      "icon-allow-overlap": true,
-    },*/
-  });
+  );
 
   // When a click event occurs on a cluster,
   // getClusterExpansionZoom grabs the zoomlevel where the cluster expands

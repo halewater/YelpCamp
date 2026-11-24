@@ -3,7 +3,6 @@ const Campground = require("../models/campground");
 const { cloudinary } = require("../cloudinary");
 //mapbox geocoding
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
-const campground = require("../models/campground");
 //mapbox access token
 const mapBoxToken = process.env.MAPBOX_TOKEN;
 //instantiating mapboxGeocoding instance with mapbox token
@@ -78,7 +77,21 @@ module.exports.updateCampground = async (req, res) => {
 
   const camp = req.body.campground;
   // console.log(camp);
-  const newCamp = await Campground.findByIdAndUpdate(id, camp);
+
+  // Get new coordinates from Mapbox
+  const geoData = await geocoder
+    .forwardGeocode({
+      query: camp.location,
+      limit: 1,
+    })
+    .send();
+
+  //const newCamp = await Campground.findByIdAndUpdate(id, camp) changed
+  const newCamp = await Campground.findByIdAndUpdate(id, {
+    ...camp,
+    geometry: geoData.body.features[0].geometry,
+  });
+
   const img = req.files.map((f) => ({
     url: f.path,
     filename: f.filename,
@@ -86,6 +99,7 @@ module.exports.updateCampground = async (req, res) => {
   newCamp.images.push(...img);
 
   await newCamp.save();
+
   if (req.body.deleteImages) {
     for (let filename of req.body.deleteImages) {
       cloudinary.uploader.destroy(filename);

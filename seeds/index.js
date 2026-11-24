@@ -3,7 +3,7 @@ const Campground = require("../models/campground");
 const cities = require("./cities");
 const { descriptors, places } = require("./seedHelpers");
 mongoose
-  .connect("mongodb://127.0.0.1:27017/yelp-camp3")
+  .connect("mongodb://127.0.0.1:27017/yelp-campW")
   .then(() => {
     console.log("Mongo Connection successful");
   })
@@ -32,7 +32,7 @@ const seedDB = async () => {
 
       //adding in author for every campground as default when the seed file runs
       //I changed the author object id here while changing the database to yelp-camp2
-      author: "6ae58b510d2080b8f999b897",
+      author: "6b042f8e96b0c22ef4434cab",
 
       geometry: {
         type: "Point",

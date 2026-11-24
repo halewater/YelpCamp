@@ -1,9 +1,3 @@
-/*
-CONTENT SECURITY POLICY
------------------------
-Here i will talk about CSP -content security policy and
-add in the needed code
-*/
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
@@ -42,8 +36,8 @@ const { MongoStore } = require("connect-mongo");
 //database URL
 //console.log("DB_URL:", dbUrl);
 
-dbUrl = dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017/yelp-camp3";
-
+dbUrl = "mongodb://127.0.0.1:27017/yelp-campW";
+//"mongodb://127.0.0.1:27017/yelp-camp3" || process.env.DB_URL;
 mongoose
   .connect(dbUrl)
   .then(() => {
@@ -123,6 +117,7 @@ const connectSrcUrls = [
   "https://b.tiles.mapbox.com/",
   "https://events.mapbox.com/",
   "https://cdn.jsdelivr.net",
+  "https://res.cloudinary.com",
 ];
 const fontSrcUrls = [];
 
@@ -197,98 +192,7 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("error", { err });
 });
 
-app.listen(8080, () => {
-  console.log("Serving on port 8080");
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+  console.log(`Serving on port ${port}`);
 });
-
-/*
-CONTENT SECURITY POLICY
------------------------
-app.use(
-  helmet({
-    contentSecurityPolicy: false,
-  }),
-);
-
-Here using regular helmet, if we don't turn off that one content
-security policy middleware, It breaks a lot in our map
-
-The images doesn't load, the map doesn't load, certain scripts 
-aren't going to work, there is a lot of red in the console and
-they all say around content security policy CSP
-
-So in helmet 
-this one middleware
-helmet.contentSecurityPolicy(options)
-sets the header called Content-Security-Policy which helps 
-mitigate cross site scripting attacks
-
-So CSP is an extra layer of security that allows us to specify 
-on this one application/website that you are on
-You are only allowed to display images from Unsplash, You are
-only allowed to run scripts form that come from this paticular
-website, and you are only allowed to display fonts form this
-website etc
-
-You can specify alist of acceptable sources and that is the whole
-point of CSP
-
-SO CSP is about designating your own policy on what is allowed and
-what is not allowed for things like images, scripts, fonts, media
-objects 
-
-there are these different directives 
-and for each one you can specify the locations, that these type
-of resource is allowed to be loaded or fetched from
-
-for example, if you are looking at font source, you could specify
-things like self -> refers to the same origin wherever document 
-is being served
-So if we set font source to be self, it would be just saying from
-our YelpCamp App; if there is a font that we have as a file
-But it would not allow us to use fonts from google fonts (for eg)
-*/
-
-/*
-When we configure the content security policy in helmet we can
-pass in our options, the default looks like this
-
-default-src 'self';
-base-uri 'self';
-font-src 'self' https: data:;
-form-action 'self';
-frame-ancestors 'self';
-img-src 'self' data:;
-object-src 'none';
-script-src 'self';
-script-src-attr 'none';
-style-src 'self' https: 'unsafe-inline';
-upgrade-insecure-requests
-
-Setting the directives in CSP in helmet will give out a header to
-the browser saying
-content security policy -> <specification>
-which the browser sees and decides -> Oh we are only allowed to
-load fonts form this place, we are only allowed to store images
-from self, unsplash is not allowed but if I have a local image
-it would be allowed etc
-
-So confuguring our own policy looks like this:
-// Sets "Content-Security-Policy: default-src 'self';
-// script-src 'self' example.com;object-src 'none';
-// upgrade-insecure-requests"
-
-app.use(
-  helmet({
-    contentSecurityPolicy: {
-      useDefaults: false,
-      directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "example.com"],
-        objectSrc: ["'none'"],
-        upgradeInsecureRequests: [],
-      },
-    },
-  }),
-);
-*/
