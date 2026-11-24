@@ -36,8 +36,7 @@ const { MongoStore } = require("connect-mongo");
 //database URL
 //console.log("DB_URL:", dbUrl);
 
-dbUrl = process.env.DB_URL;
-//"mongodb://127.0.0.1:27017/yelp-campW";
+const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017/yelp-campW";
 
 mongoose
   .connect(dbUrl)
@@ -45,7 +44,7 @@ mongoose
     console.log("Mongo Connection successful");
   })
   .catch(() => {
-    console.log("Mongo connection failed");
+    console.log("Mongo connection failed", err);
   });
 
 app.use(express.urlencoded({ extended: true }));
