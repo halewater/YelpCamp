@@ -12,7 +12,7 @@ if (process.env.NODE_ENV !== "production") {
   });
 }
 
-dbUrl = "mongodb://127.0.0.1:27017/yelp-campM";
+dbUrl = "mongodb://127.0.0.1:27017/yelp-campW";
 //process.env.DB_URL;
 
 mongoose
