@@ -1,7 +1,12 @@
 <% layout("layout/boilerplate") %><!--Here there is no need to specify location <'% layout("../layout/boilerplate") %>-->
-   <!--Inserting the cluster map-->
+   <h1>All Campgrounds</h1>
+    <!--Inserting the cluster map-->
    <div id="cluster-map"></div>
-  <h1>All Campgrounds</h1>
+
+   <div class="d-flex justify-content-end">
+     <a href="/campgrounds/new" class="btn btn-success my-3 mb-3">Create New Campground</a>
+   </div>
+
      <!-- <ul>--> 
    <% for(let camp of campgrounds){ %>
     <!--<li> <a href="/campgrounds/<%#=camp.id%>"><%#=camp.title %></a></li> -->
